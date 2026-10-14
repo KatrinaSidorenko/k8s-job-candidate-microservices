@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: candidate-service-deployment
+  labels:
+    app: candidate-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: candidate-service
+  template:
+    metadata:
+      labels:
+        app: candidate-service
+    spec:
+      containers:
+      - name: candidate-service
+        image: vinsdocker/k8s-dice-candidate
+        ports:
+        - name: candidate-service-port
+        - containerPort: 8080

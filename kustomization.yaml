@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ./src/candidate-service/k8s/candidate-service-db-init-config.yaml
+  - ./src/infrastructure/mongo/k8s
+  - ./src/job-service/k8s

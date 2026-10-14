@@ -18,15 +18,30 @@ spec:
         image: mongo:4.4-focal
         ports:
         - containerPort: 27017
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: MONGO_USER
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: MONGO_PASSWORD
         volumeMounts:
         - name: data
           mountPath: /data/db
-        - name: candidate-db-init-volume
+        - name: combined-init-volume
           mountPath: /docker-entrypoint-initdb.d
       volumes:
-      - name: candidate-db-init-volume
-        configMap:
-          name: candidate-db-init-cm
+      - name: combined-init-volume # todo: change it 
+        projected:
+          sources:
+          - configMap:
+              name: candidate-db-init-cm
+          - configMap:
+              name: job-db-init-cm
           
   volumeClaimTemplates:
   - metadata:
