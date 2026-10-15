@@ -6,3 +6,4 @@ resources:
   - ./src/infrastructure/mongo/k8s
   - ./src/job-service/k8s
   - ./src/frontend/k8s
+  - ./src/infrastructure/nginx/k8s

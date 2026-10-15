@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  nginx.conf: |
+    events{
+        worker_connections 1024;
+    }
+
+    http{
+
+        server{
+
+            location /job/ {
+                proxy_pass http://job-service-service:8080/job/;
+            }
+
+            location /candidate/ {
+                proxy_pass http://candidate-service-service:8080/candidate/;
+            }
+
+            location / {
+                proxy_pass http://frontend-service/;
+            }
+
+        }
+
+    }
