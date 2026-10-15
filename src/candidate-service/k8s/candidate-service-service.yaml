@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: candidate-service-service
+  labels:
+    app: candidate-service
+spec:
+  type: ClusterIP
+  selector:
+    app: candidate-service
+  ports:
+  - name: candidate-service-port
+    port: 8080
+    targetPort: 8080
+    protocol: TCP

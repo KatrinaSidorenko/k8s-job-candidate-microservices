@@ -18,5 +18,40 @@ spec:
       - name: candidate-service
         image: vinsdocker/k8s-dice-candidate
         ports:
-        - name: candidate-service-port
         - containerPort: 8080
+        env:
+        - name: MONGO_USER
+          valueFrom:
+            secretKeyRef:
+              name: candidate-service-db-secret
+              key: MONGO_USER
+        - name: MONGO_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: candidate-service-db-secret
+              key: MONGO_PASSWORD
+
+        - name: MONGO_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: candidate-service-db-config
+              key: MONGO_HOST
+        - name: MONGO_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: candidate-service-db-config
+              key: MONGO_PORT
+        - name: MONGO_DB
+          valueFrom:
+            configMapKeyRef:
+              name: candidate-service-db-config
+              key: MONGO_DB
+
+        - name: spring.data.mongodb.uri
+          value: "mongodb://$(MONGO_USER):$(MONGO_PASSWORD)@$(MONGO_HOST):$(MONGO_PORT)/$(MONGO_DB)"
+
+        - name: job.service.url
+          valueFrom:
+            configMapKeyRef:
+              name: candidate-service-config
+              key: JOB_SERVICE_URL

@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - candidate-service-db-secret.yaml
+  - candidate-service-db-config.yaml
+  - candidate-service-db-init-config.yaml
+  - candidate-service-config.yaml
+  - candidate-service-deployment.yaml
+  - candidate-service-service.yaml
